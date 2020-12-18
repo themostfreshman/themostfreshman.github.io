@@ -1,96 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search>
-  <entry>
-    <title>word中使用auraro写算法</title>
-    <url>/2020/12/18/word+auraro/</url>
-    <content><![CDATA[<p>本来想用latex来写全部的论文的，不过图片、位置啥的不咋会调，除了公式反而是word写起来方便点，普通的公式的话，word2019已经支持latex的写法了，就鼓捣下算法。<br>使用Auraro插件来完成插入算法</p>
-<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>贴个找来的全套的资源<br>链接 ：<a href="https://pan.baidu.com/s/1QEsiYQcXu2qXrrCc7o_xJQ">https://pan.baidu.com/s/1QEsiYQcXu2qXrrCc7o_xJQ</a><br>提取码： 5xm7</p>
-<ol>
-<li>先安装 basic-miktex-2.9.7152</li>
-<li>然后安装 auraro-setup 不要点 micro-miktex</li>
-<li>然后keyGen破解</li>
-</ol>
-<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><ol>
-<li>64位的word将auraro显示在工具栏的位置，插入时需要 插入-对象-auraro equation，不要点 显示为图标</li>
-<li>修改下latex的path，properties - paths，之前不是安装了miktex嘛，找到安装的位置，改成自己的路径<ol>
-<li>D:\auraro\latex\miktex\bin\latex.exe</li>
-<li>D:\auraro\latex\miktex\bin\dvipng.exe</li>
-<li>D:\auraro\latex\miktex\bin\pdflatex.exe</li>
-</ol>
-</li>
-<li>然后Properties那栏，把rendering method 改成第三个，不要问我为什么。。。。</li>
-<li>然后试试简单的  $a+b=c$，能不能搞定，也就是点refresh显示 done，那么简单的使用就完毕了</li>
-<li>这个时候兴致冲冲的去贴自己的算法，毫无疑问会出现 Problems running LaTex，那咋整呢，慢慢来嘛</li>
-</ol>
-<h1 id="Problems-running-LaTex的解决"><a href="#Problems-running-LaTex的解决" class="headerlink" title="Problems running LaTex的解决"></a>Problems running LaTex的解决</h1><p>出现这个问题主要就三个原因，大佬总结的</p>
-<ol>
-<li>miktex的路径没搞对，好好看下</li>
-<li>rendering method 要选第三个</li>
-<li>之前修改path的时候，是不是还有package的选项卡，我们引用了没安装的package，auraro只是个插件，可不会自动去安装没安装的包，需要我们去miktex安装以下<br>再次提醒auraro只是个插件，核心是miktex能够成功编译，那么auraro不会出现大问题。<br>package的安装，可以打开texworks，写一段，让miktex自动安装，也可以使用miktex console，在package那栏搜索安装。</li>
-</ol>
-<h1 id="其他的小问题"><a href="#其他的小问题" class="headerlink" title="其他的小问题"></a>其他的小问题</h1><ol>
-<li>l3backend-pdfmode.def not found<ol>
-<li>打开miktex console  现在update那栏更新下</li>
-<li>然后按照一般package的安装方法  安装l3backend即可</li>
-<li>还不行，看看自己是不是同时安装了 texliva 以及 miktex，删掉texlive即可，产出的话，开始栏，找到texlive，使用管理员来uninstall</li>
-</ol>
-</li>
-</ol>
-<h1 id="一个例子"><a href="#一个例子" class="headerlink" title="一个例子"></a>一个例子</h1><p>说是例子，感觉包好全，properties按这个来就行了</p>
-<ol>
-<li><p>打开texworks，新建个文件，输入如下,padletex编译，过程中会安装包，最后能顺利编译(也就是不需要按回车？)即可</p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">\documentclass[UTF8]&#123;ctexart&#125;</span><br><span class="line">\usepackage&#123;amsmath&#125;</span><br><span class="line">\usepackage&#123;amssymb&#125;</span><br><span class="line">\providecommand&#123;\abs&#125;[1]&#123;\left\lvert#1\right\rvert&#125;</span><br><span class="line">\providecommand&#123;\norm&#125;[1]&#123;\left\lVert#1\right\rVert&#125;</span><br><span class="line">\usepackage&#123;bbm&#125;</span><br><span class="line">\usepackage&#123;CJK&#125;</span><br><span class="line">\usepackage&#123;listings&#125;</span><br><span class="line">\usepackage&#123;xcolor&#125;</span><br><span class="line">\usepackage&#123;listings&#125;</span><br><span class="line">\usepackage&#123;amsmath,bm,graphicx,multirow,bm,bbm,amssymb,psfrag,algorithm,subfigure,color,mdframed,wasysym,subeqnarray,multicol&#125;</span><br><span class="line"></span><br><span class="line">\usepackage&#123;algorithm&#125;</span><br><span class="line">\usepackage&#123;algpseudocode&#125;</span><br><span class="line">\usepackage&#123;amsmath&#125;</span><br><span class="line">\renewcommand&#123;\algorithmicrequire&#125;&#123;\textbf&#123;Input:&#125;&#125;</span><br><span class="line">\renewcommand&#123;\algorithmicensure&#125;&#123;\textbf&#123;Output:&#125;&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">\begin&#123;document&#125;</span><br><span class="line">\renewcommand&#123;\thealgorithm&#125;&#123;1&#125;</span><br><span class="line">\begin&#123;algorithm&#125;[H] </span><br><span class="line">\caption&#123;*******************************************&#125; </span><br><span class="line">\label&#123;ABCLFRS&#125;</span><br><span class="line">\begin&#123;algorithmic&#125;[1] </span><br><span class="line">\Require&#123;S,$\lambda$,T,k&#125; </span><br><span class="line">\Ensure&#123;$\mathbf&#123;w&#125;_&#123;222&#125;$&#125;\\ </span><br><span class="line">\textbf&#123;initialize&#125;: Set $\mathbf&#123;w&#125;_1 &#x3D; 0$ </span><br><span class="line">\For&#123;$t &#x3D; 1,2,...,T$&#125; </span><br><span class="line">\State Choose $A_t \subset[m]$</span><br><span class="line">\EndFor</span><br><span class="line">\end&#123;algorithmic&#125; </span><br><span class="line">\end&#123;algorithm&#125;</span><br><span class="line">\end&#123;document&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>插入的时候，packages改成如下</p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">\documentclass[UTF8]&#123;ctexart&#125;</span><br><span class="line">\usepackage&#123;amsmath&#125;</span><br><span class="line">\usepackage&#123;amssymb&#125;</span><br><span class="line">\providecommand&#123;\abs&#125;[1]&#123;\left\lvert#1\right\rvert&#125;</span><br><span class="line">\providecommand&#123;\norm&#125;[1]&#123;\left\lVert#1\right\rVert&#125;</span><br><span class="line">\usepackage&#123;bbm&#125;</span><br><span class="line">\usepackage&#123;CJK&#125;</span><br><span class="line">\usepackage&#123;listings&#125;</span><br><span class="line">\usepackage&#123;xcolor&#125;</span><br><span class="line">\usepackage&#123;listings&#125;</span><br><span class="line">\usepackage&#123;amsmath,bm,graphicx,multirow,bm,bbm,amssymb,psfrag,algorithm,subfigure,color,mdframed,wasysym,subeqnarray,multicol&#125;</span><br><span class="line"></span><br><span class="line">\usepackage&#123;algorithm&#125;</span><br><span class="line">\usepackage&#123;algpseudocode&#125;</span><br><span class="line">\usepackage&#123;amsmath&#125;</span><br><span class="line">\renewcommand&#123;\algorithmicrequire&#125;&#123;\textbf&#123;Input:&#125;&#125;</span><br><span class="line">\renewcommand&#123;\algorithmicensure&#125;&#123;\textbf&#123;Output:&#125;&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>公示内容改成如下</p>
-<pre><code>    \renewcommand&#123;\thealgorithm&#125;&#123;1&#125;
-    \begin&#123;algorithm&#125;[H] 
-    \caption&#123;*******************************************&#125; 
-    \label&#123;ABCLFRS&#125;
-    \begin&#123;algorithmic&#125;[1] 
-    \Require&#123;S,$\lambda$,T,k&#125; 
-    \Ensure&#123;$\mathbf&#123;w&#125;_&#123;222&#125;$&#125;\\ 
-    \textbf&#123;initialize&#125;: Set $\mathbf&#123;w&#125;_1 = 0$ 
-    \For&#123;$t = 1,2,...,T$&#125; 
-    \State Choose $A_t \subset[m]$
-    \EndFor
-    \end&#123;algorithmic&#125; 
-    \end&#123;algorithm&#125;</code></pre>
-</li>
-<li><p>refresh出现done就可以了</p>
-</li>
-<li><p>应该贴点图的，我好懒。。。。</p>
-</li>
-<li><p>贴个大佬的链接<a href="http://www.yuerya.me/post/aurora-%7C-latex-in-word%EF%BC%8C%E6%AF%94%E6%88%91%E5%86%99%E7%9A%84%E5%A5%BD%E5%A4%9A%E4%BA%86/(%E3%84%92o%E3%84%92)/">http://www.yuerya.me/post/aurora-%7C-latex-in-word，比我写的好多了/(ㄒoㄒ)/</a>~~</p>
-<h1 id="inginging"><a href="#inginging" class="headerlink" title="inginging"></a>inginging</h1></li>
-</ol>
-]]></content>
-      <tags>
-        <tag>论文写作</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hexo + butterfly个人博客构建</title>
-    <url>/2020/11/30/hexo+butterfly/</url>
-    <content><![CDATA[<p>博客的搭建其他地方有很详细的步骤，这里记录下自己的对主题的一些修改</p>
-<h1 id="hexo-d的ssh登录"><a href="#hexo-d的ssh登录" class="headerlink" title="hexo d的ssh登录"></a>hexo d的ssh登录</h1><ol>
-<li>前提需要自己配好ssh密钥</li>
-<li>修改hexo配置文件中的deploy <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">git</span></span><br><span class="line"><span class="attr">repo:</span> <span class="string">git@github.com:themostfreshman/themostfreshman.github.io.git</span></span><br><span class="line"><span class="attr">branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h1 id="banner和footer的透明"><a href="#banner和footer的透明" class="headerlink" title="banner和footer的透明"></a>banner和footer的透明</h1><ol>
-<li>需要直接修改源文件，而banner的不显示直接按照文档，将主题配置文件中 <em>index_img</em>设置为false即可。</li>
-<li>在 \themes\butterfly\layout\includes\header\index.pug 添加如下内容完成banner的透明化 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> !is_post()</span><br><span class="line">- <span class="keyword">var</span> bg_img = <span class="string">&#x27;background-color:transparent;&#x27;</span></span><br><span class="line"><span class="string">``</span><span class="string">` </span></span><br><span class="line"><span class="string">添加的位置</span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>js</span><br><span class="line"><span class="keyword">if</span> !is_post()</span><br><span class="line">- <span class="keyword">var</span> bg_img = <span class="string">&#x27;background-color:transparent;&#x27;</span></span><br><span class="line">header#page-header(<span class="class"><span class="keyword">class</span></span>=isHomeClass style=bg_img)</span><br><span class="line">!=partial(<span class="string">&#x27;includes/header/nav&#x27;</span>, &#123;&#125;, &#123;<span class="attr">cache</span>:theme.fragment_cache&#125;)</span><br><span class="line"><span class="keyword">if</span> top_img !== <span class="literal">false</span></span><br><span class="line">    <span class="keyword">if</span> is_post()</span><br><span class="line">    include ./post-info.pug</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> is_home() </span><br><span class="line">    #site-info</span><br><span class="line">        h1#site-title=site_title</span><br><span class="line">        #site-subtitle</span><br><span class="line">        span#subtitle</span><br><span class="line">        <span class="keyword">if</span>(theme.social)</span><br><span class="line">        #site_social_icons</span><br><span class="line">            !=fragment_cache(<span class="string">&#x27;social&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="keyword">return</span> partial(<span class="string">&#x27;includes/header/social&#x27;</span>)&#125;)</span><br><span class="line">    #scroll-down</span><br><span class="line">        i.fas.fa-angle-down.scroll-down-effects</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    #page-site-info</span><br><span class="line">        h1#site-title=site_title  </span><br></pre></td></tr></table></figure></li>
-<li>在 \themes\butterfly\layout\includes\layout.pug 修改<em>footer_bg</em>如下即可 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">- <span class="keyword">var</span> footerBg = theme.footer_bg</span><br><span class="line"><span class="keyword">if</span> (footerBg)</span><br><span class="line">    <span class="keyword">if</span> (footerBg === <span class="literal">true</span>)</span><br><span class="line">    - <span class="keyword">var</span> footer_bg = bg_img</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    - <span class="keyword">var</span> footer_bg = theme.footer_bg.indexOf(<span class="string">&#x27;/&#x27;</span>) !== -<span class="number">1</span> ? <span class="string">`background-image: url(<span class="subst">$&#123;url_for(footerBg)&#125;</span>)`</span> : <span class="string">`background: <span class="subst">$&#123;footerBg&#125;</span>`</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    - <span class="keyword">var</span> footer_bg = <span class="string">&#x27;background-color: transparent;&#x27;</span></span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h1 id="banner的大小修改"><a href="#banner的大小修改" class="headerlink" title="banner的大小修改"></a>banner的大小修改</h1><p>感谢大佬的回复，在主题配置文件中修改 index_top_img_height 为345px即可，效果很满意</p>
-<h1 id="inginginging"><a href="#inginginging" class="headerlink" title="inginginging"></a>inginginging</h1>]]></content>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
+<search> 
+  
+  
+    
+    <entry>
+      <title>word中使用auraro写算法</title>
+      <link href="2020/12/18/word+auraro/"/>
+      <url>2020/12/18/word+auraro/</url>
+      
+        <content type="html"><![CDATA[<p>本来想用latex来写全部的论文的，不过图片、位置啥的不咋会调，除了公式反而是word写起来方便点，普通的公式的话，word2019已经支持latex的写法了，就鼓捣下算法。<br>使用Auraro插件来完成插入算法</p><h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>贴个找来的全套的资源<br>链接 ：<a href="https://pan.baidu.com/s/1QEsiYQcXu2qXrrCc7o_xJQ">https://pan.baidu.com/s/1QEsiYQcXu2qXrrCc7o_xJQ</a><br>提取码： 5xm7</p><ol><li>先安装 basic-miktex-2.9.7152</li><li>然后安装 auraro-setup 不要点 micro-miktex</li><li>然后keyGen破解</li></ol><h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><ol><li>64位的word将auraro显示在工具栏的位置，插入时需要 插入-对象-auraro equation，不要点 显示为图标</li><li>修改下latex的path，properties - paths，之前不是安装了miktex嘛，找到安装的位置，改成自己的路径<ol><li>D:\auraro\latex\miktex\bin\latex.exe</li><li>D:\auraro\latex\miktex\bin\dvipng.exe</li><li>D:\auraro\latex\miktex\bin\pdflatex.exe</li></ol></li><li>然后Properties那栏，把rendering method 改成第三个，不要问我为什么。。。。</li><li>然后试试简单的  $a+b=c$，能不能搞定，也就是点refresh显示 done，那么简单的使用就完毕了</li><li>这个时候兴致冲冲的去贴自己的算法，毫无疑问会出现 Problems running LaTex，那咋整呢，慢慢来嘛</li></ol><h1 id="Problems-running-LaTex的解决"><a href="#Problems-running-LaTex的解决" class="headerlink" title="Problems running LaTex的解决"></a>Problems running LaTex的解决</h1><p>出现这个问题主要就三个原因，大佬总结的</p><ol><li>miktex的路径没搞对，好好看下</li><li>rendering method 要选第三个</li><li>之前修改path的时候，是不是还有package的选项卡，我们引用了没安装的package，auraro只是个插件，可不会自动去安装没安装的包，需要我们去miktex安装以下</li><li>再次提醒auraro只是个插件，核心是miktex能够成功编译，那么auraro不会出现大问题。</li><li>package的安装，可以打开texworks，写一段，让miktex自动安装，也可以使用miktex console，在package那栏搜索安装。</li></ol><h1 id="其他的小问题"><a href="#其他的小问题" class="headerlink" title="其他的小问题"></a>其他的小问题</h1><ol><li>l3backend-pdfmode.def not found<ol><li>打开miktex console  现在update那栏更新下</li><li>然后按照一般package的安装方法  安装l3backend即可</li><li>还不行，看看自己是不是同时安装了 texliva 以及 miktex，删掉texlive即可，产出的话，开始栏，找到texlive，使用管理员来uninstall</li></ol></li></ol><h1 id="一个例子"><a href="#一个例子" class="headerlink" title="一个例子"></a>一个例子</h1><p>说是例子，感觉包好全，properties按这个来就行了</p><ol><li><p>打开texworks，新建个文件，输入如下,padletex编译，过程中会安装包，最后能顺利编译(也就是不需要按回车？)即可</p> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">\documentclass[UTF8]&#123;ctexart&#125;</span><br><span class="line">\usepackage&#123;amsmath&#125;</span><br><span class="line">\usepackage&#123;amssymb&#125;</span><br><span class="line">\providecommand&#123;\abs&#125;[1]&#123;\left\lvert#1\right\rvert&#125;</span><br><span class="line">\providecommand&#123;\norm&#125;[1]&#123;\left\lVert#1\right\rVert&#125;</span><br><span class="line">\usepackage&#123;bbm&#125;</span><br><span class="line">\usepackage&#123;CJK&#125;</span><br><span class="line">\usepackage&#123;listings&#125;</span><br><span class="line">\usepackage&#123;xcolor&#125;</span><br><span class="line">\usepackage&#123;listings&#125;</span><br><span class="line">\usepackage&#123;amsmath,bm,graphicx,multirow,bm,bbm,amssymb,psfrag,algorithm,subfigure,color,mdframed,wasysym,subeqnarray,multicol&#125;</span><br><span class="line"></span><br><span class="line">\usepackage&#123;algorithm&#125;</span><br><span class="line">\usepackage&#123;algpseudocode&#125;</span><br><span class="line">\usepackage&#123;amsmath&#125;</span><br><span class="line">\renewcommand&#123;\algorithmicrequire&#125;&#123;\textbf&#123;Input:&#125;&#125;</span><br><span class="line">\renewcommand&#123;\algorithmicensure&#125;&#123;\textbf&#123;Output:&#125;&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">\begin&#123;document&#125;</span><br><span class="line">\renewcommand&#123;\thealgorithm&#125;&#123;1&#125;</span><br><span class="line">\begin&#123;algorithm&#125;[H] </span><br><span class="line">\caption&#123;*******************************************&#125; </span><br><span class="line">\label&#123;ABCLFRS&#125;</span><br><span class="line">\begin&#123;algorithmic&#125;[1] </span><br><span class="line">\Require&#123;S,$\lambda$,T,k&#125; </span><br><span class="line">\Ensure&#123;$\mathbf&#123;w&#125;_&#123;222&#125;$&#125;\\ </span><br><span class="line">\textbf&#123;initialize&#125;: Set $\mathbf&#123;w&#125;_1 &#x3D; 0$ </span><br><span class="line">\For&#123;$t &#x3D; 1,2,...,T$&#125; </span><br><span class="line">\State Choose $A_t \subset[m]$</span><br><span class="line">\EndFor</span><br><span class="line">\end&#123;algorithmic&#125; </span><br><span class="line">\end&#123;algorithm&#125;</span><br><span class="line">\end&#123;document&#125;</span><br></pre></td></tr></table></figure></li><li><p>插入的时候，packages改成如下</p> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">\documentclass[UTF8]&#123;ctexart&#125;</span><br><span class="line">\usepackage&#123;amsmath&#125;</span><br><span class="line">\usepackage&#123;amssymb&#125;</span><br><span class="line">\providecommand&#123;\abs&#125;[1]&#123;\left\lvert#1\right\rvert&#125;</span><br><span class="line">\providecommand&#123;\norm&#125;[1]&#123;\left\lVert#1\right\rVert&#125;</span><br><span class="line">\usepackage&#123;bbm&#125;</span><br><span class="line">\usepackage&#123;CJK&#125;</span><br><span class="line">\usepackage&#123;listings&#125;</span><br><span class="line">\usepackage&#123;xcolor&#125;</span><br><span class="line">\usepackage&#123;listings&#125;</span><br><span class="line">\usepackage&#123;amsmath,bm,graphicx,multirow,bm,bbm,amssymb,psfrag,algorithm,subfigure,color,mdframed,wasysym,subeqnarray,multicol&#125;</span><br><span class="line"></span><br><span class="line">\usepackage&#123;algorithm&#125;</span><br><span class="line">\usepackage&#123;algpseudocode&#125;</span><br><span class="line">\usepackage&#123;amsmath&#125;</span><br><span class="line">\renewcommand&#123;\algorithmicrequire&#125;&#123;\textbf&#123;Input:&#125;&#125;</span><br><span class="line">\renewcommand&#123;\algorithmicensure&#125;&#123;\textbf&#123;Output:&#125;&#125;</span><br></pre></td></tr></table></figure></li><li><p>公示内容改成如下</p><pre><code>    \renewcommand&#123;\thealgorithm&#125;&#123;1&#125;    \begin&#123;algorithm&#125;[H]     \caption&#123;*******************************************&#125;     \label&#123;ABCLFRS&#125;    \begin&#123;algorithmic&#125;[1]     \Require&#123;S,$\lambda$,T,k&#125;     \Ensure&#123;$\mathbf&#123;w&#125;_&#123;222&#125;$&#125;\\     \textbf&#123;initialize&#125;: Set $\mathbf&#123;w&#125;_1 = 0$     \For&#123;$t = 1,2,...,T$&#125;     \State Choose $A_t \subset[m]$    \EndFor    \end&#123;algorithmic&#125;     \end&#123;algorithm&#125;</code></pre></li><li><p>refresh出现done就可以了</p></li><li><p>应该贴点图的，我好懒。。。。</p></li><li><p>贴个大佬的链接   <a href="http://www.yuerya.me/post/aurora-%7C-latex-in-word">http://www.yuerya.me/post/aurora-%7C-latex-in-word</a>        比我写的好多了/(ㄒoㄒ)/~~</p><h1 id="inginging"><a href="#inginging" class="headerlink" title="inginging"></a>inginging</h1></li></ol>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 论文写作 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>hexo + butterfly个人博客构建</title>
+      <link href="2020/11/30/hexo+butterfly/"/>
+      <url>2020/11/30/hexo+butterfly/</url>
+      
+        <content type="html"><![CDATA[<p>博客的搭建其他地方有很详细的步骤，这里记录下自己的对主题的一些修改</p><h1 id="hexo-d的ssh登录"><a href="#hexo-d的ssh登录" class="headerlink" title="hexo d的ssh登录"></a>hexo d的ssh登录</h1><ol><li>前提需要自己配好ssh密钥</li><li>修改hexo配置文件中的deploy <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">git</span></span><br><span class="line"><span class="attr">repo:</span> <span class="string">git@github.com:themostfreshman/themostfreshman.github.io.git</span></span><br><span class="line"><span class="attr">branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure></li></ol><h1 id="banner和footer的透明"><a href="#banner和footer的透明" class="headerlink" title="banner和footer的透明"></a>banner和footer的透明</h1><ol><li>需要直接修改源文件，而banner的不显示直接按照文档，将主题配置文件中 <em>index_img</em>设置为false即可。</li><li>在 \themes\butterfly\layout\includes\header\index.pug 添加如下内容完成banner的透明化 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> !is_post()</span><br><span class="line">- <span class="keyword">var</span> bg_img = <span class="string">&#x27;background-color:transparent;&#x27;</span></span><br><span class="line"><span class="string">``</span><span class="string">` </span></span><br><span class="line"><span class="string">添加的位置</span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>js</span><br><span class="line"><span class="keyword">if</span> !is_post()</span><br><span class="line">- <span class="keyword">var</span> bg_img = <span class="string">&#x27;background-color:transparent;&#x27;</span></span><br><span class="line">header#page-header(<span class="class"><span class="keyword">class</span></span>=isHomeClass style=bg_img)</span><br><span class="line">!=partial(<span class="string">&#x27;includes/header/nav&#x27;</span>, &#123;&#125;, &#123;<span class="attr">cache</span>:theme.fragment_cache&#125;)</span><br><span class="line"><span class="keyword">if</span> top_img !== <span class="literal">false</span></span><br><span class="line">    <span class="keyword">if</span> is_post()</span><br><span class="line">    include ./post-info.pug</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> is_home() </span><br><span class="line">    #site-info</span><br><span class="line">        h1#site-title=site_title</span><br><span class="line">        #site-subtitle</span><br><span class="line">        span#subtitle</span><br><span class="line">        <span class="keyword">if</span>(theme.social)</span><br><span class="line">        #site_social_icons</span><br><span class="line">            !=fragment_cache(<span class="string">&#x27;social&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="keyword">return</span> partial(<span class="string">&#x27;includes/header/social&#x27;</span>)&#125;)</span><br><span class="line">    #scroll-down</span><br><span class="line">        i.fas.fa-angle-down.scroll-down-effects</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    #page-site-info</span><br><span class="line">        h1#site-title=site_title  </span><br></pre></td></tr></table></figure></li><li>在 \themes\butterfly\layout\includes\layout.pug 修改<em>footer_bg</em>如下即可 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">- <span class="keyword">var</span> footerBg = theme.footer_bg</span><br><span class="line"><span class="keyword">if</span> (footerBg)</span><br><span class="line">    <span class="keyword">if</span> (footerBg === <span class="literal">true</span>)</span><br><span class="line">    - <span class="keyword">var</span> footer_bg = bg_img</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    - <span class="keyword">var</span> footer_bg = theme.footer_bg.indexOf(<span class="string">&#x27;/&#x27;</span>) !== -<span class="number">1</span> ? <span class="string">`background-image: url(<span class="subst">$&#123;url_for(footerBg)&#125;</span>)`</span> : <span class="string">`background: <span class="subst">$&#123;footerBg&#125;</span>`</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    - <span class="keyword">var</span> footer_bg = <span class="string">&#x27;background-color: transparent;&#x27;</span></span><br></pre></td></tr></table></figure></li></ol><h1 id="banner的大小修改"><a href="#banner的大小修改" class="headerlink" title="banner的大小修改"></a>banner的大小修改</h1><p>感谢大佬的回复，在主题配置文件中修改 index_top_img_height 为345px即可，效果很满意</p><h1 id="inginginging"><a href="#inginginging" class="headerlink" title="inginginging"></a>inginginging</h1>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> hexo </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
 </search>
