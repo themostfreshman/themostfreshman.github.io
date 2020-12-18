@@ -17,6 +17,7 @@
 
 </li>
 </ol>
+<h1 id="banner的大小修改"><a href="#banner的大小修改" class="headerlink" title="banner的大小修改"></a>banner的大小修改</h1><p>感谢大佬的回复，在主题配置文件中修改 index_top_img_height 为345px即可，效果很满意</p>
 <h1 id="inginginging"><a href="#inginginging" class="headerlink" title="inginginging"></a>inginginging</h1>]]></content>
       <tags>
         <tag>hexo</tag>
@@ -48,9 +49,7 @@
 <ol>
 <li>miktex的路径没搞对，好好看下</li>
 <li>rendering method 要选第三个</li>
-<li>之前修改path的时候，是不是还有package的选项卡，我们引用了没安装的package，auraro只是个插件，可不会自动去安装没安装的包，需要我们去miktex安装以下</li>
-<li>再次提醒auraro只是个插件，核心是miktex能够成功编译，那么auraro不会出现大问题。</li>
-<li>package的安装，可以打开texworks，写一段，让miktex自动安装，也可以使用miktex console，在package那栏搜索安装。</li>
+<li>之前修改path的时候，是不是还有package的选项卡，我们引用了没安装的package，auraro只是个插件，可不会自动去安装没安装的包，需要我们去miktex安装以下<br>再次提醒auraro只是个插件，核心是miktex能够成功编译，那么auraro不会出现大问题。<br>package的安装，可以打开texworks，写一段，让miktex自动安装，也可以使用miktex console，在package那栏搜索安装。</li>
 </ol>
 <h1 id="其他的小问题"><a href="#其他的小问题" class="headerlink" title="其他的小问题"></a>其他的小问题</h1><ol>
 <li>l3backend-pdfmode.def not found<ol>
@@ -86,8 +85,10 @@
 </li>
 <li><p>应该贴点图的，我好懒。。。。</p>
 </li>
+<li><p>贴个大佬的链接<a href="http://www.yuerya.me/post/aurora-%7C-latex-in-word%EF%BC%8C%E6%AF%94%E6%88%91%E5%86%99%E7%9A%84%E5%A5%BD%E5%A4%9A%E4%BA%86/(%E3%84%92o%E3%84%92)/">http://www.yuerya.me/post/aurora-%7C-latex-in-word，比我写的好多了/(ㄒoㄒ)/</a>~~</p>
+<h1 id="inginging"><a href="#inginging" class="headerlink" title="inginging"></a>inginging</h1></li>
 </ol>
-<h1 id="inginging"><a href="#inginging" class="headerlink" title="inginging"></a>inginging</h1>]]></content>
+]]></content>
       <tags>
         <tag>论文写作</tag>
       </tags>
