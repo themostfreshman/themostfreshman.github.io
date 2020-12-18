@@ -1,29 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>hexo + butterfly个人博客构建</title>
-    <url>/2020/11/30/hexo+butterfly/</url>
-    <content><![CDATA[<p>博客的搭建其他地方有很详细的步骤，这里记录下自己的对主题的一些修改</p>
-<h1 id="hexo-d的ssh登录"><a href="#hexo-d的ssh登录" class="headerlink" title="hexo d的ssh登录"></a>hexo d的ssh登录</h1><ol>
-<li>前提需要自己配好ssh密钥</li>
-<li>修改hexo配置文件中的deploy <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">git</span></span><br><span class="line"><span class="attr">repo:</span> <span class="string">git@github.com:themostfreshman/themostfreshman.github.io.git</span></span><br><span class="line"><span class="attr">branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h1 id="banner和footer的透明"><a href="#banner和footer的透明" class="headerlink" title="banner和footer的透明"></a>banner和footer的透明</h1><ol>
-<li>需要直接修改源文件，而banner的不显示直接按照文档，将主题配置文件中 <em>index_img</em>设置为false即可。</li>
-<li>在 \themes\butterfly\layout\includes\header\index.pug 添加如下内容完成banner的透明化 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> !is_post()</span><br><span class="line">- <span class="keyword">var</span> bg_img = <span class="string">&#x27;background-color:transparent;&#x27;</span></span><br><span class="line"><span class="string">``</span><span class="string">` </span></span><br><span class="line"><span class="string">添加的位置</span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>js</span><br><span class="line"><span class="keyword">if</span> !is_post()</span><br><span class="line">- <span class="keyword">var</span> bg_img = <span class="string">&#x27;background-color:transparent;&#x27;</span></span><br><span class="line">header#page-header(<span class="class"><span class="keyword">class</span></span>=isHomeClass style=bg_img)</span><br><span class="line">!=partial(<span class="string">&#x27;includes/header/nav&#x27;</span>, &#123;&#125;, &#123;<span class="attr">cache</span>:theme.fragment_cache&#125;)</span><br><span class="line"><span class="keyword">if</span> top_img !== <span class="literal">false</span></span><br><span class="line">    <span class="keyword">if</span> is_post()</span><br><span class="line">    include ./post-info.pug</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> is_home() </span><br><span class="line">    #site-info</span><br><span class="line">        h1#site-title=site_title</span><br><span class="line">        #site-subtitle</span><br><span class="line">        span#subtitle</span><br><span class="line">        <span class="keyword">if</span>(theme.social)</span><br><span class="line">        #site_social_icons</span><br><span class="line">            !=fragment_cache(<span class="string">&#x27;social&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="keyword">return</span> partial(<span class="string">&#x27;includes/header/social&#x27;</span>)&#125;)</span><br><span class="line">    #scroll-down</span><br><span class="line">        i.fas.fa-angle-down.scroll-down-effects</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    #page-site-info</span><br><span class="line">        h1#site-title=site_title  </span><br></pre></td></tr></table></figure></li>
-<li>在 \themes\butterfly\layout\includes\layout.pug 修改<em>footer_bg</em>如下即可 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">- <span class="keyword">var</span> footerBg = theme.footer_bg</span><br><span class="line"><span class="keyword">if</span> (footerBg)</span><br><span class="line">    <span class="keyword">if</span> (footerBg === <span class="literal">true</span>)</span><br><span class="line">    - <span class="keyword">var</span> footer_bg = bg_img</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    - <span class="keyword">var</span> footer_bg = theme.footer_bg.indexOf(<span class="string">&#x27;/&#x27;</span>) !== -<span class="number">1</span> ? <span class="string">`background-image: url(<span class="subst">$&#123;url_for(footerBg)&#125;</span>)`</span> : <span class="string">`background: <span class="subst">$&#123;footerBg&#125;</span>`</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    - <span class="keyword">var</span> footer_bg = <span class="string">&#x27;background-color: transparent;&#x27;</span></span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h1 id="banner的大小修改"><a href="#banner的大小修改" class="headerlink" title="banner的大小修改"></a>banner的大小修改</h1><p>感谢大佬的回复，在主题配置文件中修改 index_top_img_height 为345px即可，效果很满意</p>
-<h1 id="inginginging"><a href="#inginginging" class="headerlink" title="inginginging"></a>inginginging</h1>]]></content>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>word中使用auraro写算法</title>
     <url>/2020/12/18/word+auraro/</url>
     <content><![CDATA[<p>本来想用latex来写全部的论文的，不过图片、位置啥的不咋会调，除了公式反而是word写起来方便点，普通的公式的话，word2019已经支持latex的写法了，就鼓捣下算法。<br>使用Auraro插件来完成插入算法</p>
@@ -91,6 +68,29 @@
 ]]></content>
       <tags>
         <tag>论文写作</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo + butterfly个人博客构建</title>
+    <url>/2020/11/30/hexo+butterfly/</url>
+    <content><![CDATA[<p>博客的搭建其他地方有很详细的步骤，这里记录下自己的对主题的一些修改</p>
+<h1 id="hexo-d的ssh登录"><a href="#hexo-d的ssh登录" class="headerlink" title="hexo d的ssh登录"></a>hexo d的ssh登录</h1><ol>
+<li>前提需要自己配好ssh密钥</li>
+<li>修改hexo配置文件中的deploy <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">git</span></span><br><span class="line"><span class="attr">repo:</span> <span class="string">git@github.com:themostfreshman/themostfreshman.github.io.git</span></span><br><span class="line"><span class="attr">branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h1 id="banner和footer的透明"><a href="#banner和footer的透明" class="headerlink" title="banner和footer的透明"></a>banner和footer的透明</h1><ol>
+<li>需要直接修改源文件，而banner的不显示直接按照文档，将主题配置文件中 <em>index_img</em>设置为false即可。</li>
+<li>在 \themes\butterfly\layout\includes\header\index.pug 添加如下内容完成banner的透明化 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> !is_post()</span><br><span class="line">- <span class="keyword">var</span> bg_img = <span class="string">&#x27;background-color:transparent;&#x27;</span></span><br><span class="line"><span class="string">``</span><span class="string">` </span></span><br><span class="line"><span class="string">添加的位置</span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>js</span><br><span class="line"><span class="keyword">if</span> !is_post()</span><br><span class="line">- <span class="keyword">var</span> bg_img = <span class="string">&#x27;background-color:transparent;&#x27;</span></span><br><span class="line">header#page-header(<span class="class"><span class="keyword">class</span></span>=isHomeClass style=bg_img)</span><br><span class="line">!=partial(<span class="string">&#x27;includes/header/nav&#x27;</span>, &#123;&#125;, &#123;<span class="attr">cache</span>:theme.fragment_cache&#125;)</span><br><span class="line"><span class="keyword">if</span> top_img !== <span class="literal">false</span></span><br><span class="line">    <span class="keyword">if</span> is_post()</span><br><span class="line">    include ./post-info.pug</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> is_home() </span><br><span class="line">    #site-info</span><br><span class="line">        h1#site-title=site_title</span><br><span class="line">        #site-subtitle</span><br><span class="line">        span#subtitle</span><br><span class="line">        <span class="keyword">if</span>(theme.social)</span><br><span class="line">        #site_social_icons</span><br><span class="line">            !=fragment_cache(<span class="string">&#x27;social&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="keyword">return</span> partial(<span class="string">&#x27;includes/header/social&#x27;</span>)&#125;)</span><br><span class="line">    #scroll-down</span><br><span class="line">        i.fas.fa-angle-down.scroll-down-effects</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    #page-site-info</span><br><span class="line">        h1#site-title=site_title  </span><br></pre></td></tr></table></figure></li>
+<li>在 \themes\butterfly\layout\includes\layout.pug 修改<em>footer_bg</em>如下即可 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">- <span class="keyword">var</span> footerBg = theme.footer_bg</span><br><span class="line"><span class="keyword">if</span> (footerBg)</span><br><span class="line">    <span class="keyword">if</span> (footerBg === <span class="literal">true</span>)</span><br><span class="line">    - <span class="keyword">var</span> footer_bg = bg_img</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    - <span class="keyword">var</span> footer_bg = theme.footer_bg.indexOf(<span class="string">&#x27;/&#x27;</span>) !== -<span class="number">1</span> ? <span class="string">`background-image: url(<span class="subst">$&#123;url_for(footerBg)&#125;</span>)`</span> : <span class="string">`background: <span class="subst">$&#123;footerBg&#125;</span>`</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    - <span class="keyword">var</span> footer_bg = <span class="string">&#x27;background-color: transparent;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h1 id="banner的大小修改"><a href="#banner的大小修改" class="headerlink" title="banner的大小修改"></a>banner的大小修改</h1><p>感谢大佬的回复，在主题配置文件中修改 index_top_img_height 为345px即可，效果很满意</p>
+<h1 id="inginginging"><a href="#inginginging" class="headerlink" title="inginginging"></a>inginginging</h1>]]></content>
+      <tags>
+        <tag>hexo</tag>
       </tags>
   </entry>
 </search>
