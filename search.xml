@@ -148,7 +148,7 @@
       </tags>
   </entry>
   <entry>
-    <title></title>
+    <title>mysql笔记</title>
     <url>/2021/10/09/mysql%20%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<h1 id="mysql-笔记"><a href="#mysql-笔记" class="headerlink" title="mysql 笔记"></a>mysql 笔记</h1><h2 id="group-by的使用"><a href="#group-by的使用" class="headerlink" title="group by的使用"></a>group by的使用</h2><ol>
 <li><p>问题描述</p>
@@ -248,5 +248,8 @@ WINDOW w AS (partition by user_no order by amount desc);</code></pre>
 </li>
 </ol>
 ]]></content>
+      <tags>
+        <tag>mysql</tag>
+      </tags>
   </entry>
 </search>
