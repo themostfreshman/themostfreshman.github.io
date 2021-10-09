@@ -147,4 +147,106 @@
         <tag>hexo</tag>
       </tags>
   </entry>
+  <entry>
+    <title></title>
+    <url>/2021/10/09/mysql%20%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<h1 id="mysql-笔记"><a href="#mysql-笔记" class="headerlink" title="mysql 笔记"></a>mysql 笔记</h1><h2 id="group-by的使用"><a href="#group-by的使用" class="headerlink" title="group by的使用"></a>group by的使用</h2><ol>
+<li><p>问题描述</p>
+</li>
+<li><p>需求：<br>得到分组的前几条记录。最简单的想法当然是group by + order by 但是会报如下的错误：<br><code>ONLY_FUll_GROUP_BY</code>:如果在<code>select</code>中的列，没有在<code>Group by</code>中出现，那么这个<code>SQL</code>是不合法的，因为列不在<code>Gruop by</code> 语句，也就是说查出来的列必须是<code>GROUP BY</code>之后的字段，或者这个字段出现在聚合函数里面。</p>
+</li>
+<li><p>原因：<br><code>mysql</code>从<code>5.7</code>的某个版本开始调整了默认参数<code>sql_mode</code>值；<code>ONLY_FULL_GROUP_BY</code>影响了了<code>group by</code>的使用。</p>
+</li>
+<li><p>解决方法：</p>
+<ol>
+<li>修改<code>sql_mode</code><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql&gt; set session sql_mode&#x3D;&#39;STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION&#39;;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; set global sql_mode&#x3D;&#39;STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION&#39;;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br></pre></td></tr></table></figure>
+或者在<code>my.ini</code>直接修改<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sql_mode&#x3D;STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION</span><br></pre></td></tr></table></figure></li>
+<li>生产环境的<code>sql_mode</code>并不建议直接修改，因此只能另找路子了，<code>mysql</code>仿照<code>oracle</code>的<code>row_number()over</code>来实现该功能。</li>
+</ol>
+<p>表flow_task有phaseno（序列号），objectno（编号）等几个字段，我们想实现根据编号字段分组，然后组内根据序列号排序功能</p>
+ <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">    　　<span class="keyword">select</span> @<span class="keyword">rownum</span>:=@<span class="keyword">rownum</span>+<span class="number">1</span> <span class="keyword">rownum</span>,a.objectno,a.phaseno,</span><br><span class="line"><span class="keyword">if</span>(@objno=a.OBJECTNO <span class="keyword">or</span> (@objno <span class="keyword">is</span> <span class="literal">null</span> <span class="keyword">and</span> a.objectno <span class="keyword">is</span> <span class="literal">null</span>),</span><br><span class="line">        @<span class="keyword">rank</span>:=@<span class="keyword">rank</span>+<span class="number">1</span>,</span><br><span class="line">        @<span class="keyword">rank</span>:=<span class="number">1</span>) <span class="keyword">as</span> row_number,</span><br><span class="line">@objno:=a.OBJECTNO</span><br><span class="line"><span class="keyword">from</span>(<span class="keyword">SELECT</span> * <span class="keyword">from</span> flow_task <span class="keyword">order</span> <span class="keyword">by</span> OBJECTNO,phaseno <span class="keyword">asc</span>)a,</span><br><span class="line">(<span class="keyword">select</span> @<span class="keyword">rownum</span> :=<span class="number">0</span>,@objno:=<span class="literal">null</span>,@<span class="keyword">rank</span>:=<span class="number">0</span>)b</span><br></pre></td></tr></table></figure>
+<hr>
+<p> 分析：</p>
+<ol>
+<li><p>mysql的四种变量</p>
+<ol>
+<li><code>global</code>变量：以 <code>@@</code> 打头，<code>@@global.variable_name</code>。如 <code>show global variables like &#39;%character%&#39;;</code>只能设置全部变量中存在的变量，不能跨重启。如果想永久生效，需要在配置文件中配置。</li>
+<li><code>session</code>变量：以 <code>@@</code> 打头，<code>@@session.variable_name</code>，当省略<code>session</code>时，<code>@@variable_name</code>是<code>session</code>变量。<code>session</code>变量存活周期当前<code>connection</code>。会话变量存活周期是当前 <code>connection</code>，<code>connection</code> 断掉后，变量释放。<code>session</code> 变量继承自 <code>global</code> 变量，只能设置 <code>global</code> 中存在的变量。</li>
+<li><code>用户自定义变量</code>：以 <code>@</code> 打头，存活周期当前 <code>connection</code> ,<code>connection</code> 断掉后释放变量，用户自定义变量不需要声明，可以直接使用。</li>
+<li><code>局部变量</code>：存在于存储过程、函数中，必须先声明然后才能使用。eg: <code>declare x int default 0</code>。</li>
+</ol>
+</li>
+<li><p><code>if(condition,a,b)</code>,假如条件匹配，则a,否则则b </p>
+</li>
+<li><p><code>@rownum:=@rownum+1 as rownum</code> 行号，每一行在上行<code>@rownum</code>变量值的基础上+1</p>
+</li>
+<li><p><code>if(@objno=a.OBJECTNO or (@objno is null and a.objectno is null),@rank:=@rank+1,@rank:=1)</code>。每一行判断，当前行的 <code>objectno（编号）</code> 是否等于上一个 <code>@objno</code> 变量值，如果是在上一个 <code>@rank</code> 变量值基础上+1，否则 <code>@rank</code> 赋值1</p>
+</li>
+<li><p><code>@objno:=a.OBJECTNO</code>，当前行 <code>objectno</code> 赋值给变量<code>@objno</code></p>
+</li>
+<li><p><code>order by OBJECTNO,phaseno asc</code> 分组字段在前，排序字段在后</p>
+</li>
+<li><p><code>select @rownum :=0,@objno:=null,@rank:=0</code>用户变量赋初值</p>
+</li>
+</ol>
+</li>
+<li><p><code>mysql</code> 窗口函数</p>
+<p> <code>mysql</code>在8.0后实现了窗口函数，可以简化上述功能的实现。</p>
+<ol>
+<li><p>表达式： <code>窗口函数 over 窗口表达式</code></p>
+</li>
+<li><p>窗口：可以理解为<code>groupby</code>之后的一组数据</p>
+</li>
+<li><p>窗口函数：</p>
+<ol>
+<li>序号函数：<code>row_number()/rank()/dense_rank()</code></li>
+<li>分布函数：<code>percent_rank()/cume_dist()</code></li>
+<li>前后函数：<code>lead()/lag()</code></li>
+<li>头尾函数: <code>first_val()/last()</code></li>
+<li>其他函数：<code>nth_value()/nfile</code></li>
+<li>聚合函数也能用: <code>sum(),avg(),max(),min(),count()</code></li>
+</ol>
+</li>
+<li><p>窗口函数和聚合函数的相同与不同点</p>
+<ol>
+<li>窗口函数和聚合函数都是基于分组的，窗口函数在窗口表达式中分组，聚合函数在<code>group by</code> 语法中分组。</li>
+<li>聚合函数会导致返回的行数被汇总和减少，每组一行。窗口函数不影响返回值的行数，原来有几行，用了聚合函数也还是几行，读了一个字段。</li>
+<li>聚合函数可以作为窗口函数在窗口函数的语法中使用。</li>
+</ol>
+</li>
+<li><p>窗口函数的写法</p>
+<ol>
+<li><code>over</code> 关键字后直接定义窗口<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> </span><br><span class="line">    row_number() <span class="keyword">over</span> (<span class="keyword">partition</span> <span class="keyword">by</span> user_no <span class="keyword">order</span> <span class="keyword">by</span> amount <span class="keyword">desc</span>),order_id</span><br><span class="line"><span class="keyword">from</span> <span class="keyword">order</span>;</span><br></pre></td></tr></table></figure></li>
+<li><code>over</code> 关键字后使用窗口别名<pre><code class="sql">select 
+ row_number() over w,
+from order
+WINDOW w AS (partition by user_no order by amount desc);</code></pre>
+</li>
+</ol>
+</li>
+<li><p>窗口表达式语法</p>
+<ol>
+<li><code>partition by</code> 分组，可以类比 <code>group by</code></li>
+<li><code>order by</code> 排序</li>
+<li><code>frame</code> 定义子窗口，暂且按下不表</li>
+</ol>
+</li>
+<li><p>窗口函数介绍</p>
+<ol>
+<li>序号函数 ： row_number(),rank().dense_rank()<ol>
+<li>row_number():排序字段相同时，行号随机排，下一行正常加1</li>
+<li>rank() ：排序字段相同时，行号相同，并列冠军，没有亚军</li>
+<li>dense_rank():排序字段相同时，行号相同，并列冠军，有亚军</li>
+</ol>
+</li>
+<li>其他的按下不表</li>
+</ol>
+</li>
+<li><p>so    <code>select *.row_number()over(partition by objectno order by phaseno) ranks from order</code></p>
+</li>
+</ol>
+</li>
+</ol>
+]]></content>
+  </entry>
 </search>
